@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef } from 'react'
 import Chart from 'chart.js/auto'
+import { useEffect, useRef } from 'react'
 
 export interface Measurement {
   date: Date
@@ -11,6 +11,10 @@ export interface Measurement {
 interface Props {
   label: string
   measurements: Measurement[]
+}
+
+function formatDate(date: Date): string {
+  return date.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
 }
 
 export function MeasurementChart(props: Props) {
@@ -25,7 +29,7 @@ export function MeasurementChart(props: Props) {
         const chart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: measurements.map(measurement => measurement.date.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })),
+            labels: measurements.map(measurement => formatDate(measurement.date)),
             datasets: [{
               label: label,
               data: measurements.map(measurement => measurement.value),
