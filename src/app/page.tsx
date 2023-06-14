@@ -1,19 +1,13 @@
+import { MeasurementChart } from '@/components/MeasurementChart'
+import { Measurement } from '@/models/measurement'
 import { firebase } from '@/utils/firebase'
-import styles from './page.module.css'
 import * as firebaseDatabase from "firebase/database"
-interface Props {
-  data: any
-}
+import styles from './page.module.css'
 
 const dataTypeDict = {
   temperature: 'temperatura',
   humidity: 'umidade',
   soilHumidity: 'umidade do solo',
-}
-
-interface Measurement {
-  date: Date
-  value: number
 }
 
 async function getData(dataType: keyof typeof dataTypeDict) {
@@ -30,17 +24,34 @@ async function getData(dataType: keyof typeof dataTypeDict) {
   })
 }
 
-export default async function Home(props: Props) {
+export default async function Home() {
   const humidityMeasurements = await getData('humidity')
   const temperatureMeasurements = await getData('temperature')
   const soilHumidityMeasurements = await getData('soilHumidity')
 
-  console.log(humidityMeasurements)
-  console.log(temperatureMeasurements)
-  console.log(soilHumidityMeasurements)
   return (
     <main className={styles.main}>
-      teste
+      <h2>Dados do sensor de umidade</h2>
+      <div className={styles.chartContainer}>
+        <MeasurementChart
+          label='Umidade'
+          measurements={humidityMeasurements}
+        />
+      </div>
+      <h2>Dados do sensor de temperatura</h2>
+      <div className={styles.chartContainer}>
+        <MeasurementChart
+          label='Temperatura'
+          measurements={temperatureMeasurements}
+        />
+      </div>
+      <h2>Dados do sensor de umidade do solo</h2>
+      <div className={styles.chartContainer}>
+        <MeasurementChart
+          label='Umidade do solo'
+          measurements={soilHumidityMeasurements}
+        />
+      </div>
     </main>
   )
 }
