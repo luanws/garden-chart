@@ -25,13 +25,13 @@ export function MeasurementChart(props: Props) {
         const chart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: measurements.map(measurement => measurement.date.toLocaleString('en-US', { month: 'short' })),
+            labels: measurements.map(measurement => measurement.date.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })),
             datasets: [{
               label: label,
               data: measurements.map(measurement => measurement.value),
-              backgroundColor: 'rgba(54, 162, 235, 0.5)',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1
+              backgroundColor: '#119411',
+              borderColor: '#10ad25',
+              borderWidth: 0
             }]
           },
           options: {
