@@ -4,6 +4,8 @@ import { firebase } from '@/utils/firebase'
 import * as firebaseDatabase from "firebase/database"
 import styles from './page.module.css'
 
+export const revalidate = 1
+
 const dataTypeDict = {
   temperature: 'temperatura',
   humidity: 'umidade',
