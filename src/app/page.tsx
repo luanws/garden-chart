@@ -27,9 +27,15 @@ async function getData(dataType: keyof typeof dataTypeDict) {
 }
 
 export default async function Home() {
-  const humidityMeasurements = await getData('humidity')
-  const temperatureMeasurements = await getData('temperature')
-  const soilHumidityMeasurements = await getData('soilHumidity')
+  const [
+    humidityMeasurements,
+    temperatureMeasurements,
+    soilHumidityMeasurements,
+  ] = await Promise.all([
+    getData('humidity'),
+    getData('temperature'),
+    getData('soilHumidity'),
+  ])
 
   return (
     <main className={styles.main}>
