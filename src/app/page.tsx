@@ -1,41 +1,26 @@
+'use client'
+
 import { MeasurementChart } from '@/components/MeasurementChart'
 import { Measurement } from '@/models/measurement'
-import { firebase } from '@/utils/firebase'
-import * as firebaseDatabase from "firebase/database"
+import { MeasurementService } from '@/services/measurement'
+import { useEffect, useState } from 'react'
 import styles from './page.module.css'
 
-export const revalidate = 1
+export default function Home() {
+  const [humidityMeasurements, setHumidityMeasurements] = useState<Measurement[]>([])
+  const [temperatureMeasurements, setTemperatureMeasurements] = useState<Measurement[]>([])
+  const [soilHumidityMeasurements, setSoilHumidityMeasurements] = useState<Measurement[]>([])
 
-const dataTypeDict = {
-  temperature: 'temperatura',
-  humidity: 'umidade',
-  soilHumidity: 'umidade do solo',
-}
-
-async function getData(dataType: keyof typeof dataTypeDict) {
-  const rootRef = firebaseDatabase.ref(firebase.database, `/dados/${dataTypeDict[dataType]}`)
-  const snapshot = await firebaseDatabase.get(rootRef)
-  const val = snapshot.val()
-  return Object.entries(val).map(([key, value]) => value).map(value => {
-    const { dataHora, valor } = value as any
-    const measurement: Measurement = {
-      date: new Date(parseInt(dataHora) * 1000),
-      value: valor
+  useEffect(() => {
+    const clearListenHumidity = MeasurementService.listenData('humidity', setHumidityMeasurements)
+    const clearListenTemperature = MeasurementService.listenData('temperature', setTemperatureMeasurements)
+    const clearListenSoilHumidity = MeasurementService.listenData('soilHumidity', setSoilHumidityMeasurements)
+    return () => {
+      clearListenHumidity()
+      clearListenTemperature()
+      clearListenSoilHumidity()
     }
-    return measurement
-  })
-}
-
-export default async function Home() {
-  const [
-    humidityMeasurements,
-    temperatureMeasurements,
-    soilHumidityMeasurements,
-  ] = await Promise.all([
-    getData('humidity'),
-    getData('temperature'),
-    getData('soilHumidity'),
-  ])
+  }, [])
 
   return (
     <main className={styles.main}>
