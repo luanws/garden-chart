@@ -10,8 +10,8 @@ export default function Home() {
   const [humidityMeasurements, setHumidityMeasurements] = useState<Measurement[]>([])
   const [temperatureMeasurements, setTemperatureMeasurements] = useState<Measurement[]>([])
   const [soilHumidityMeasurements, setSoilHumidityMeasurements] = useState<Measurement[]>([])
-  const [startDate, setStartDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
 
   useEffect(() => {
     const clearListenHumidity = MeasurementService.listenData('humidity', setHumidityMeasurements)
@@ -24,14 +24,9 @@ export default function Home() {
     }
   }, [])
 
-  function filterMeasurements(measurements: Measurement[]) {
-    return measurements.filter(measurement => {
-      if (startDate === null) return true
-      return measurement.date.getTime() >= startDate.getTime()
-    }).filter(measurement => {
-      if (endDate === null) return true
-      return measurement.date.getTime() <= endDate.getTime()
-    })
+  function filterMeasurements(measurements: Measurement[]): Measurement[] {
+    const filteredMeasurements = MeasurementService.filterByDate(measurements, startDate, endDate)
+    return MeasurementService.limitMeasurements(filteredMeasurements, 100)
   }
 
   return (
