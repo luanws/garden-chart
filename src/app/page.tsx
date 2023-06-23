@@ -12,6 +12,18 @@ export default function Home() {
   const [soilHumidityMeasurements, setSoilHumidityMeasurements] = useState<Measurement[]>([])
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
   const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+  const [screenWidth, setScreenWidth] = useState<number>(0)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    setScreenWidth(window.innerWidth)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   useEffect(() => {
     const clearListenHumidity = MeasurementService.listenData('humidity', setHumidityMeasurements)
@@ -26,7 +38,7 @@ export default function Home() {
 
   function filterMeasurements(measurements: Measurement[]): Measurement[] {
     const filteredMeasurements = MeasurementService.filterByDate(measurements, startDate, endDate)
-    const limit = Math.floor((window.innerWidth) * 100 / 1920)
+    const limit = Math.floor(screenWidth * 100 / 1920)
     return MeasurementService.limitMeasurements(filteredMeasurements, limit)
   }
 
