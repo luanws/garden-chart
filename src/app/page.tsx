@@ -26,7 +26,8 @@ export default function Home() {
 
   function filterMeasurements(measurements: Measurement[]): Measurement[] {
     const filteredMeasurements = MeasurementService.filterByDate(measurements, startDate, endDate)
-    return MeasurementService.limitMeasurements(filteredMeasurements, window.innerWidth * 100 / 1920)
+    const limit = Math.floor((window.innerWidth) * 100 / 1920)
+    return MeasurementService.limitMeasurements(filteredMeasurements, limit)
   }
 
   return (
