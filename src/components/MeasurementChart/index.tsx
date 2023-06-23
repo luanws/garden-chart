@@ -11,6 +11,7 @@ export interface Measurement {
 interface Props {
   label: string
   measurements: Measurement[]
+  color: string
 }
 
 function formatDate(date: Date): string {
@@ -18,7 +19,7 @@ function formatDate(date: Date): string {
 }
 
 export function MeasurementChart(props: Props) {
-  const { measurements, label } = props
+  const { measurements, label, color } = props
 
   const chartRef = useRef<HTMLCanvasElement | null>(null)
 
@@ -33,8 +34,8 @@ export function MeasurementChart(props: Props) {
             datasets: [{
               label: label,
               data: measurements.map(measurement => measurement.value),
-              backgroundColor: '#119411',
-              borderColor: '#10ad25',
+              backgroundColor: color,
+              borderColor: color,
             }]
           },
           options: {

@@ -48,24 +48,27 @@ export default function Home() {
           onChange={event => setEndDate(new Date(event.target.value))}
         />
       </div>
-      <h2>Dados do sensor de umidade</h2>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Umidade'
-          measurements={filterMeasurements(humidityMeasurements)}
-        />
-      </div>
       <h2>Dados do sensor de temperatura</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
           label='Temperatura'
+          color='#10ad25'
           measurements={filterMeasurements(temperatureMeasurements)}
+        />
+      </div>
+      <h2>Dados do sensor de umidade do ar</h2>
+      <div className={styles.chartContainer}>
+        <MeasurementChart
+          label='Umidade'
+          color='#0d6efd'
+          measurements={filterMeasurements(humidityMeasurements)}
         />
       </div>
       <h2>Dados do sensor de umidade do solo</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
           label='Umidade do solo'
+          color='#fd7e14'
           measurements={filterMeasurements(soilHumidityMeasurements)}
         />
       </div>
