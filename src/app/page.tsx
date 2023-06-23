@@ -10,6 +10,8 @@ export default function Home() {
   const [humidityMeasurements, setHumidityMeasurements] = useState<Measurement[]>([])
   const [temperatureMeasurements, setTemperatureMeasurements] = useState<Measurement[]>([])
   const [soilHumidityMeasurements, setSoilHumidityMeasurements] = useState<Measurement[]>([])
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
 
   useEffect(() => {
     const clearListenHumidity = MeasurementService.listenData('humidity', setHumidityMeasurements)
@@ -22,27 +24,46 @@ export default function Home() {
     }
   }, [])
 
+  function filterMeasurements(measurements: Measurement[]) {
+    if (!startDate || !endDate) return measurements
+    return measurements.filter(measurement => {
+      return measurement.date.getTime() >= startDate.getTime() && measurement.date.getTime() <= endDate.getTime()
+    })
+  }
+
   return (
     <main className={styles.main}>
+      <div className={styles.dateInputsContainer}>
+        <input
+          className={styles.dateInput}
+          type="datetime-local"
+          onChange={event => setStartDate(new Date(event.target.value))}
+        />
+        <input
+          className={styles.dateInput}
+          type="datetime-local"
+          onChange={event => setEndDate(new Date(event.target.value))}
+        />
+      </div>
       <h2>Dados do sensor de umidade</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
           label='Umidade'
-          measurements={humidityMeasurements}
+          measurements={filterMeasurements(humidityMeasurements)}
         />
       </div>
       <h2>Dados do sensor de temperatura</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
           label='Temperatura'
-          measurements={temperatureMeasurements}
+          measurements={filterMeasurements(temperatureMeasurements)}
         />
       </div>
       <h2>Dados do sensor de umidade do solo</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
           label='Umidade do solo'
-          measurements={soilHumidityMeasurements}
+          measurements={filterMeasurements(soilHumidityMeasurements)}
         />
       </div>
     </main>

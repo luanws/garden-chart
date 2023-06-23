@@ -13,3 +13,15 @@
     margin-bottom: 4rem;
     margin-top: 1rem;
 }
+
+.dateInputsContainer {
+    margin-bottom: 4rem;
+}
+
+.dateInput {
+    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 16px 20px;
+    margin-right: 10px;
+}
