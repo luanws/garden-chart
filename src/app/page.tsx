@@ -25,9 +25,12 @@ export default function Home() {
   }, [])
 
   function filterMeasurements(measurements: Measurement[]) {
-    if (!startDate || !endDate) return measurements
     return measurements.filter(measurement => {
-      return measurement.date.getTime() >= startDate.getTime() && measurement.date.getTime() <= endDate.getTime()
+      if (startDate === null) return true
+      return measurement.date.getTime() >= startDate.getTime()
+    }).filter(measurement => {
+      if (endDate === null) return true
+      return measurement.date.getTime() <= endDate.getTime()
     })
   }
 
