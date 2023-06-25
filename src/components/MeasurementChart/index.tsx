@@ -36,6 +36,7 @@ export function MeasurementChart(props: Props) {
               data: measurements.map(measurement => measurement.value),
               backgroundColor: color,
               borderColor: color,
+              borderWidth: 2,
             }]
           },
           options: {
