@@ -37,6 +37,7 @@ export function MeasurementChart(props: Props) {
               backgroundColor: color,
               borderColor: color,
               borderWidth: 2,
+              tension: 0.3,
             }]
           },
           options: {
