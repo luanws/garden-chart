@@ -9,7 +9,7 @@ import { getDatabase } from "firebase/database"
 const firebaseConfig = {
     apiKey: "AIzaSyC9qxwieTSrnhST5B9Tb4pWidQaM2b409s",
     authDomain: "tccii-acedd.firebaseapp.com",
-    databaseURL: "https://tccii-acedd-default-rtdb.firebaseio.com",
+    databaseURL: "https://tccii-acedd.firebaseio.com",
     projectId: "tccii-acedd",
     storageBucket: "tccii-acedd.appspot.com",
     messagingSenderId: "496091910083",

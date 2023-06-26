@@ -7,6 +7,7 @@ export namespace MeasurementService {
         temperature: 'temperatura',
         humidity: 'umidade',
         soilHumidity: 'umidade do solo',
+        luminosity: 'Luminosidade',
     }
 
     export function limitMeasurements(measurements: Measurement[], limit: number): Measurement[] {

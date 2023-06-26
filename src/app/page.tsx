@@ -10,6 +10,7 @@ export default function Home() {
   const [humidityMeasurements, setHumidityMeasurements] = useState<Measurement[]>([])
   const [temperatureMeasurements, setTemperatureMeasurements] = useState<Measurement[]>([])
   const [soilHumidityMeasurements, setSoilHumidityMeasurements] = useState<Measurement[]>([])
+  const [luminosityMeasurements, setLuminosityMeasurements] = useState<Measurement[]>([])
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
   const [endDate, setEndDate] = useState<Date | undefined>(undefined)
   const [screenWidth, setScreenWidth] = useState<number>(0)
@@ -29,10 +30,12 @@ export default function Home() {
     const clearListenHumidity = MeasurementService.listenData('humidity', setHumidityMeasurements)
     const clearListenTemperature = MeasurementService.listenData('temperature', setTemperatureMeasurements)
     const clearListenSoilHumidity = MeasurementService.listenData('soilHumidity', setSoilHumidityMeasurements)
+    const clearListenLuminosity = MeasurementService.listenData('luminosity', setLuminosityMeasurements)
     return () => {
       clearListenHumidity()
       clearListenTemperature()
       clearListenSoilHumidity()
+      clearListenLuminosity()
     }
   }, [])
 
@@ -78,6 +81,14 @@ export default function Home() {
           label='Umidade do solo'
           color='#fd7e14'
           measurements={filterMeasurements(soilHumidityMeasurements)}
+        />
+      </div>
+      <h2>Dados do sensor de luminosidade</h2>
+      <div className={styles.chartContainer}>
+        <MeasurementChart
+          label='Luminosidade'
+          color='#ffc107'
+          measurements={filterMeasurements(luminosityMeasurements)}
         />
       </div>
     </main>
