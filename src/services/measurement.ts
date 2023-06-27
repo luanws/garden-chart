@@ -9,6 +9,12 @@ export namespace MeasurementService {
         soilHumidity: 'umidade do solo',
     }
 
+    export type MeasurementType = keyof typeof dataTypeDict
+
+    export function getMeasurementNameByType(type: MeasurementType) {
+        return dataTypeDict[type]
+    }
+
     export function limitMeasurements(measurements: Measurement[], limit: number): Measurement[] {
         const length = measurements.length
         return measurements.filter((measurement, index) => {
@@ -26,7 +32,7 @@ export namespace MeasurementService {
         })
     }
 
-    export async function getData(dataType: keyof typeof dataTypeDict) {
+    export async function getData(dataType: MeasurementType) {
         const rootRef = firebaseDatabase.ref(firebase.database, `/dados/${dataTypeDict[dataType]}`)
         const snapshot = await firebaseDatabase.get(rootRef)
         const val = snapshot.val()
@@ -40,7 +46,7 @@ export namespace MeasurementService {
         })
     }
 
-    export function listenData(dataType: keyof typeof dataTypeDict, callback: (measurements: Measurement[]) => void) {
+    export function listenData(dataType: MeasurementType, callback: (measurements: Measurement[]) => void) {
         const rootRef = firebaseDatabase.ref(firebase.database, `/dados/${dataTypeDict[dataType]}`)
         firebaseDatabase.onValue(rootRef, snapshot => {
             const val = snapshot.val()

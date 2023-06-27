@@ -1,0 +1,28 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6rem;
+    min-height: 100vh;
+}
+
+.chartContainer {
+    height: 50vh;
+    width: 80vw;
+    margin-bottom: 4rem;
+    margin-top: 1rem;
+}
+
+.dateInputsContainer {
+    margin-bottom: 4rem;
+}
+
+.dateInput {
+    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 16px 20px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+}
