@@ -19,11 +19,8 @@ export default function ChartPage(props: Props) {
   const color = MeasurementService.getMeasurementColorByType(measurementType as any)
 
   const [measurements, setMeasurements] = useState<Measurement[]>([])
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
   const [screenWidth, setScreenWidth] = useState<number>(0)
 
-  const defaultMeasurements = filterMeasurements(measurements, { startDate, endDate, limitEnabled: true })
   const todayMeasurements = filterMeasurements(measurements, { limitEnabled: false, startDate: new Date(new Date().setHours(0, 0, 0, 0)) })
   const weekMeasurements = filterMeasurements(measurements, { limitEnabled: true, startDate: new Date(new Date().setDate(new Date().getDate() - 7)) })
 
@@ -55,26 +52,6 @@ export default function ChartPage(props: Props) {
 
   return (
     <main className={styles.main}>
-      <div className={styles.dateInputsContainer}>
-        <input
-          className={styles.dateInput}
-          type="datetime-local"
-          onChange={event => setStartDate(new Date(event.target.value))}
-        />
-        <input
-          className={styles.dateInput}
-          type="datetime-local"
-          onChange={event => setEndDate(new Date(event.target.value))}
-        />
-      </div>
-      <h2>Dados com filtros de data</h2>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label={measurementName}
-          color={color}
-          measurements={defaultMeasurements}
-        />
-      </div>
       <h2>Dados de hoje</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
