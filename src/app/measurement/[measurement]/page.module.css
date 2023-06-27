@@ -7,6 +7,10 @@
     min-height: 100vh;
 }
 
+.title {
+    margin-bottom: 4rem;
+}
+
 .chartContainer {
     height: 50vh;
     width: 80vw;

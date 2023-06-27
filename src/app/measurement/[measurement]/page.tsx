@@ -52,7 +52,7 @@ export default function ChartPage(props: Props) {
 
   return (
     <main className={styles.main}>
-      <h1>{measurementName}</h1>
+      <h1 className={styles.title}>{measurementName}</h1>
       <h2>Dados de hoje</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
