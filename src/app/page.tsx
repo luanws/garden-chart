@@ -3,6 +3,7 @@
 import { MeasurementChart } from '@/components/MeasurementChart'
 import { Measurement } from '@/models/measurement'
 import { MeasurementService } from '@/services/measurement'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import styles from './page.module.css'
 
@@ -57,29 +58,35 @@ export default function Home() {
         />
       </div>
       <h2>Dados do sensor de temperatura</h2>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Temperatura'
-          color='#10ad25'
-          measurements={filterMeasurements(temperatureMeasurements)}
-        />
-      </div>
+      <Link href='/measurement/temperature'>
+        <div className={styles.chartContainer}>
+          <MeasurementChart
+            label='Temperatura'
+            color='#10ad25'
+            measurements={filterMeasurements(temperatureMeasurements)}
+          />
+        </div>
+      </Link>
       <h2>Dados do sensor de umidade do ar</h2>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Umidade'
-          color='#0d6efd'
-          measurements={filterMeasurements(humidityMeasurements)}
-        />
-      </div>
+      <Link href='/measurement/humidity'>
+        <div className={styles.chartContainer}>
+          <MeasurementChart
+            label='Umidade'
+            color='#0d6efd'
+            measurements={filterMeasurements(humidityMeasurements)}
+          />
+        </div>
+      </Link>
       <h2>Dados do sensor de umidade do solo</h2>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Umidade do solo'
-          color='#fd7e14'
-          measurements={filterMeasurements(soilHumidityMeasurements)}
-        />
-      </div>
+      <Link href='/measurement/soilHumidity'>
+        <div className={styles.chartContainer}>
+          <MeasurementChart
+            label='Umidade do solo'
+            color='#fd7e14'
+            measurements={filterMeasurements(soilHumidityMeasurements)}
+          />
+        </div>
+      </Link>
     </main>
   )
 }

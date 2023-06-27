@@ -16,6 +16,7 @@ export default function ChartPage(props: Props) {
   const { params } = props
   const { measurement: measurementType } = params
   const measurementName = MeasurementService.getMeasurementNameByType(measurementType as any)
+  const color = MeasurementService.getMeasurementColorByType(measurementType as any)
 
   const [measurements, setMeasurements] = useState<Measurement[]>([])
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
@@ -70,7 +71,7 @@ export default function ChartPage(props: Props) {
       <div className={styles.chartContainer}>
         <MeasurementChart
           label={measurementName}
-          color='#10ad25'
+          color={color}
           measurements={defaultMeasurements}
         />
       </div>
@@ -78,7 +79,7 @@ export default function ChartPage(props: Props) {
       <div className={styles.chartContainer}>
         <MeasurementChart
           label={measurementName}
-          color='#10ad25'
+          color={color}
           measurements={todayMeasurements}
         />
       </div>
@@ -86,7 +87,7 @@ export default function ChartPage(props: Props) {
       <div className={styles.chartContainer}>
         <MeasurementChart
           label={measurementName}
-          color='#10ad25'
+          color={color}
           measurements={weekMeasurements}
         />
       </div>

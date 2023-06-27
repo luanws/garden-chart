@@ -9,10 +9,20 @@ export namespace MeasurementService {
         soilHumidity: 'umidade do solo',
     }
 
+    const colorDict = {
+        temperature: '#10ad25',
+        humidity: '#0d6efd',
+        soilHumidity: '#fd7e14',
+    }
+
     export type MeasurementType = keyof typeof dataTypeDict
 
     export function getMeasurementNameByType(type: MeasurementType) {
         return dataTypeDict[type]
+    }
+
+    export function getMeasurementColorByType(type: MeasurementType) {
+        return colorDict[type]
     }
 
     export function limitMeasurements(measurements: Measurement[], limit: number): Measurement[] {
