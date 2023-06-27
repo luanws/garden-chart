@@ -21,7 +21,7 @@ export default function ChartPage(props: Props) {
   const [measurements, setMeasurements] = useState<Measurement[]>([])
   const [screenWidth, setScreenWidth] = useState<number>(0)
 
-  const todayMeasurements = filterMeasurements(measurements, { limitEnabled: false, startDate: new Date(new Date().setHours(0, 0, 0, 0)) })
+  const todayMeasurements = filterMeasurements(measurements, { limitEnabled: true, startDate: new Date(new Date().setHours(0, 0, 0, 0)) })
   const weekMeasurements = filterMeasurements(measurements, { limitEnabled: true, startDate: new Date(new Date().setDate(new Date().getDate() - 7)) })
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function ChartPage(props: Props) {
 
   return (
     <main className={styles.main}>
+      <h1>{measurementName}</h1>
       <h2>Dados de hoje</h2>
       <div className={styles.chartContainer}>
         <MeasurementChart
