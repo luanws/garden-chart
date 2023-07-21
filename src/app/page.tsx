@@ -7,6 +7,12 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import styles from './page.module.css'
 
+interface ChartView {
+  measurementType: MeasurementService.MeasurementType
+  label: string
+  measurements: Measurement[]
+}
+
 export default function Home() {
   const [humidityMeasurements, setHumidityMeasurements] = useState<Measurement[]>([])
   const [temperatureMeasurements, setTemperatureMeasurements] = useState<Measurement[]>([])
@@ -14,6 +20,24 @@ export default function Home() {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
   const [endDate, setEndDate] = useState<Date | undefined>(undefined)
   const [screenWidth, setScreenWidth] = useState<number>(0)
+
+  const charts: ChartView[] = [
+    {
+      measurementType: 'temperature',
+      label: 'temperatura',
+      measurements: temperatureMeasurements
+    },
+    {
+      measurementType: 'humidity',
+      label: 'umidade',
+      measurements: humidityMeasurements
+    },
+    {
+      measurementType: 'soilHumidity',
+      label: 'umidade do solo',
+      measurements: soilHumidityMeasurements
+    },
+  ]
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,36 +81,20 @@ export default function Home() {
           onChange={event => setEndDate(new Date(event.target.value))}
         />
       </div>
-      <Link href='/measurement/temperature'>
-        <h2>Dados do sensor de temperatura</h2>
-      </Link>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Temperatura'
-          color='#10ad25'
-          measurements={filterMeasurements(temperatureMeasurements)}
-        />
-      </div>
-      <Link href='/measurement/humidity'>
-        <h2>Dados do sensor de umidade do ar</h2>
-      </Link>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Umidade'
-          color='#0d6efd'
-          measurements={filterMeasurements(humidityMeasurements)}
-        />
-      </div>
-      <Link href='/measurement/soilHumidity'>
-        <h2>Dados do sensor de umidade do solo</h2>
-      </Link>
-      <div className={styles.chartContainer}>
-        <MeasurementChart
-          label='Umidade do solo'
-          color='#fd7e14'
-          measurements={filterMeasurements(soilHumidityMeasurements)}
-        />
-      </div>
+      {charts.map(chart =>
+        <>
+          <Link href={`/measurement/${chart.measurementType}`}>
+            <h2>Dados do sensor de {chart.label}</h2>
+          </Link>
+          <div className={styles.chartContainer}>
+            <MeasurementChart
+              label={chart.label}
+              color={MeasurementService.getMeasurementColorByType(chart.measurementType)}
+              measurements={filterMeasurements(chart.measurements)}
+            />
+          </div>
+        </>
+      )}
     </main>
   )
 }
