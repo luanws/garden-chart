@@ -6,13 +6,17 @@ export namespace MeasurementService {
     const dataTypeDict = {
         temperature: 'temperatura',
         humidity: 'umidade',
-        soilHumidity: 'umidade do solo',
+        capacitive: 'umidade do solo - capacitivo',
+        resistive1: 'umidade do solo - resistivo 1',
+        resistive2: 'umidade do solo - resistivo 2',
     }
 
     const colorDict = {
         temperature: '#10ad25',
         humidity: '#0d6efd',
-        soilHumidity: '#fd7e14',
+        capacitive: '#fd7e14',
+        resistive1: '#dc3545',
+        resistive2: '#6610f2',
     }
 
     export type MeasurementType = keyof typeof dataTypeDict

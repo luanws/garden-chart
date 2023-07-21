@@ -16,7 +16,10 @@ interface ChartView {
 export default function Home() {
   const [humidityMeasurements, setHumidityMeasurements] = useState<Measurement[]>([])
   const [temperatureMeasurements, setTemperatureMeasurements] = useState<Measurement[]>([])
-  const [soilHumidityMeasurements, setSoilHumidityMeasurements] = useState<Measurement[]>([])
+  const [capacitiveMeasurements, setCapacitiveMeasurements] = useState<Measurement[]>([])
+  const [resistive1Measurements, setResistive1Measurements] = useState<Measurement[]>([])
+  const [resistive2Measurements, setResistive2Measurements] = useState<Measurement[]>([])
+
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
   const [endDate, setEndDate] = useState<Date | undefined>(undefined)
   const [screenWidth, setScreenWidth] = useState<number>(0)
@@ -33,10 +36,20 @@ export default function Home() {
       measurements: humidityMeasurements
     },
     {
-      measurementType: 'soilHumidity',
-      label: 'umidade do solo',
-      measurements: soilHumidityMeasurements
+      measurementType: 'capacitive',
+      label: 'umidade do solo (capacitivo)',
+      measurements: capacitiveMeasurements
     },
+    {
+      measurementType: 'resistive1',
+      label: 'umidade do solo (resistivo 1)',
+      measurements: resistive1Measurements
+    },
+    {
+      measurementType: 'resistive2',
+      label: 'umidade do solo (resistivo 2)',
+      measurements: resistive2Measurements
+    }
   ]
 
   useEffect(() => {
@@ -53,11 +66,15 @@ export default function Home() {
   useEffect(() => {
     const clearListenHumidity = MeasurementService.listenData('humidity', setHumidityMeasurements)
     const clearListenTemperature = MeasurementService.listenData('temperature', setTemperatureMeasurements)
-    const clearListenSoilHumidity = MeasurementService.listenData('soilHumidity', setSoilHumidityMeasurements)
+    const clearListenCapacitive = MeasurementService.listenData('capacitive', setCapacitiveMeasurements)
+    const clearListenResistive1 = MeasurementService.listenData('resistive1', setResistive1Measurements)
+    const clearListenResistive2 = MeasurementService.listenData('resistive2', setResistive2Measurements)
     return () => {
       clearListenHumidity()
       clearListenTemperature()
-      clearListenSoilHumidity()
+      clearListenCapacitive()
+      clearListenResistive1()
+      clearListenResistive2()
     }
   }, [])
 
